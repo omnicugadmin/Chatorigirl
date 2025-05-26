@@ -124,53 +124,57 @@
   <footer>&copy; 2025 ChatoriGirl. All rights reserved.</footer>
 
   <script>
-    // Replace with your actual deployed edge function URL
-    const EDGE_FUNCTION_URL = "https://oakssvcgsgpqydrdpdhn.supabase.co/functions/v1/smooth-function";
-// Your Supabase anon key from dashboard - safe to expose in frontend
-   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ha3NzdmNnc2dwcXlkcmRwZGhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY1NDExMzUsImV4cCI6MjA2MjExNzEzNX0.hM0jVSTXs9TzXfeq2Z-b6IeXIdz68VBTE2aBWrh2RYk";
+  const EDGE_FUNCTION_URL = "https://oakssvcgsgpqydrdpdhn.supabase.co/functions/v1/smooth-function";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ha3NzdmNnc2dwcXlkcmRwZGhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY1NDExMzUsImV4cCI6MjA2MjExNzEzNX0.hM0jVSTXs9TzXfeq2Z-b6IeXIdz68VBTE2aBWrh2RYk";
 
-    const rewardBtn = document.getElementById("reward-btn");
-    const fancyMessage = document.getElementById("fancy-message");
+  const rewardBtn = document.getElementById("reward-btn");
+  const fancyMessage = document.getElementById("fancy-message");
 
-    async function giveReward() {
-      rewardBtn.disabled = true;
-      rewardBtn.textContent = "⏳ Checking...";
+  async function giveReward() {
+    rewardBtn.disabled = true;
+    rewardBtn.textContent = "⏳ Checking...";
 
-      try {
-        const response = await fetch(EDGE_FUNCTION_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" ,
-          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`},
-           body: JSON.stringify({ action: "get_reward" })
-         // body: JSON.stringify({})  // No token sent — backend picks one from unique_token table
-         
-        });
+    try {
+      const response = await fetch(EDGE_FUNCTION_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({ action: "get_reward" }),
+      });
 
-        const result = await response.json();
+      const result = await response.json();
 
-        if (!response.ok) {
-          showMessage(`⚠️ ${result.error || "Something went wrong. Try again."}`);
-          rewardBtn.textContent = "Try Again";
-          rewardBtn.disabled = false;
-          return;
-        }
-
-        showMessage(`✨ Waoooo! Congratulations! You got ${result.reward} pani puri FREE! ✨`);
-        rewardBtn.textContent = "🎉 Reward Claimed";
-      } catch (error) {
-        console.error(error);
-        showMessage("⚠️ Failed to contact server.");
+      if (!response.ok) {
+        showMessage(`⚠️ ${result.error || "Something went wrong. Try again."}`);
         rewardBtn.textContent = "Try Again";
         rewardBtn.disabled = false;
+        return;
       }
-    }
 
-    function showMessage(msg) {
-      fancyMessage.textContent = msg;
-      fancyMessage.style.display = "block";
+      if (result.message) {
+        // Show special message for zero reward
+        showMessage(`😞 ${result.message}`);
+      } else {
+        showMessage(`✨ Waoooo! Congratulations! You got ${result.reward} pani puri FREE! ✨`);
+      }
+      rewardBtn.textContent = "🎉 Reward Claimed";
+    } catch (error) {
+      console.error(error);
+      showMessage("⚠️ Failed to contact server.");
+      rewardBtn.textContent = "Try Again";
+      rewardBtn.disabled = false;
     }
+  }
 
-    rewardBtn.addEventListener("click", giveReward);
-  </script>
+  function showMessage(msg) {
+    fancyMessage.textContent = msg;
+    fancyMessage.style.display = "block";
+  }
+
+  rewardBtn.addEventListener("click", giveReward);
+</script>
+
 </body>
 </html>
