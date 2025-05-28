@@ -106,6 +106,45 @@
       padding: 15px;
       font-size: 0.9rem;
     }
+    #plate-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    #plate-modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    #plate-input {
+      font-size: 1.2rem;
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+      margin-bottom: 15px;
+      width: 80%;
+    }
+    #submit-plate {
+      background-color: #ff9800;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    #submit-plate:hover {
+      background-color: #f57c00;
+    }
   </style>
 </head>
 <body>
@@ -123,58 +162,91 @@
   <div class="thank-you">🙏 Thank you for visiting our page and scanning the QR!<br/>Enjoy your pani puri and keep coming back for more!</div>
   <footer>&copy; 2025 ChatoriGirl. All rights reserved.</footer>
 
+  <!-- Plate Number Modal -->
+  <div id="plate-modal">
+    <div id="plate-modal-content">
+      <h2>Enter Your Plate Number</h2>
+      <input type="text" id="plate-input" placeholder="e.g. DL8CAF1234" />
+      <br />
+      <button id="submit-plate">Submit</button>
+    </div>
+  </div>
+
   <script>
-  const EDGE_FUNCTION_URL = "https://oakssvcgsgpqydrdpdhn.supabase.co/functions/v1/smooth-function";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ha3NzdmNnc2dwcXlkcmRwZGhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY1NDExMzUsImV4cCI6MjA2MjExNzEzNX0.hM0jVSTXs9TzXfeq2Z-b6IeXIdz68VBTE2aBWrh2RYk";
+    const EDGE_FUNCTION_URL = "https://oakssvcgsgpqydrdpdhn.supabase.co/functions/v1/smooth_functionv2";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ha3NzdmNnc2dwcXlkcmRwZGhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY1NDExMzUsImV4cCI6MjA2MjExNzEzNX0.hM0jVSTXs9TzXfeq2Z-b6IeXIdz68VBTE2aBWrh2RYk"; // 🔁 Use your actual anon key here
 
-  const rewardBtn = document.getElementById("reward-btn");
-  const fancyMessage = document.getElementById("fancy-message");
+    const rewardBtn = document.getElementById("reward-btn");
+    const fancyMessage = document.getElementById("fancy-message");
+    const modal = document.getElementById("plate-modal");
+    const plateInput = document.getElementById("plate-input");
+    const submitPlateBtn = document.getElementById("submit-plate");
 
-  async function giveReward() {
-    rewardBtn.disabled = true;
-    rewardBtn.textContent = "⏳ Checking...";
+    function showMessage(msg) {
+      fancyMessage.textContent = msg;
+      fancyMessage.style.display = "block";
+    }
 
-    try {
-      const response = await fetch(EDGE_FUNCTION_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({ action: "get_reward" }),
-      });
+    rewardBtn.addEventListener("click", () => {
+      plateInput.value = "";
+      modal.style.display = "flex";
+    });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        showMessage(`⚠️ ${result.error || "Something went wrong. Try again."}`);
-        rewardBtn.textContent = "Try Again";
-        rewardBtn.disabled = false;
+    submitPlateBtn.addEventListener("click", async () => {
+      const plateNo = plateInput.value.trim();
+      if (!plateNo) {
+        alert("🚫 Plate number is required!");
         return;
       }
 
-      if (result.message) {
-        // Show special message for zero reward
-        showMessage(`😞 ${result.message}`);
-      } else {
-        showMessage(`✨ Waoooo! Congratulations! You got ${result.reward} pani puri FREE! ✨`);
+      modal.style.display = "none";
+      rewardBtn.disabled = true;
+      rewardBtn.textContent = "⏳ Checking...";
+
+      const storedData = JSON.parse(localStorage.getItem("rewardClaim"));
+      if (storedData && storedData.plate === plateNo) {
+        showMessage(`✨ You already claimed ${storedData.reward} pani puri FREE! ✨`);
+        rewardBtn.textContent = "🎉 Reward Claimed";
+        return;
       }
-      rewardBtn.textContent = "🎉 Reward Claimed";
-    } catch (error) {
-      console.error(error);
-      showMessage("⚠️ Failed to contact server.");
-      rewardBtn.textContent = "Try Again";
-      rewardBtn.disabled = false;
-    }
-  }
 
-  function showMessage(msg) {
-    fancyMessage.textContent = msg;
-    fancyMessage.style.display = "block";
-  }
+      try {
+        const response = await fetch(EDGE_FUNCTION_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+          },
+          body: JSON.stringify({
+            action: "get_reward",
+            plate_no: plateNo
+          })
+        });
 
-  rewardBtn.addEventListener("click", giveReward);
-</script>
+        const result = await response.json();
 
+        if (!response.ok || !result.reward) {
+          showMessage(`⚠️ ${result.error || "Something went wrong."}`);
+          rewardBtn.textContent = "Try Again";
+          rewardBtn.disabled = false;
+          return;
+        }
+
+        localStorage.setItem("rewardClaim", JSON.stringify({
+          reward: result.reward,
+          plate: plateNo
+        }));
+
+        showMessage(`✨ Congratulations! You got ${result.reward} pani puri FREE! ✨`);
+        rewardBtn.textContent = "🎉 Reward Claimed";
+
+      } catch (error) {
+        console.error(error);
+        showMessage("⚠️ Network error. Please try again.");
+        rewardBtn.textContent = "Try Again";
+        rewardBtn.disabled = false;
+      }
+    });
+  </script>
 </body>
-</html>
+</html> 
