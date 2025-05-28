@@ -148,7 +148,6 @@
   </style>
 </head>
 <body>
-
   <header>
     <h1 class="curved-title">ChatoriGirl</h1>
     <p>Welcome to <strong>ChatoriGirl - pani puri kahte hai</strong>!</p>
@@ -162,7 +161,6 @@
   <div class="thank-you">🙏 Thank you for visiting our page and scanning the QR!<br/>Enjoy your pani puri and keep coming back for more!</div>
   <footer>&copy; 2025 ChatoriGirl. All rights reserved.</footer>
 
-  <!-- Plate Number Modal -->
   <div id="plate-modal">
     <div id="plate-modal-content">
       <h2>Enter Your Plate Number</h2>
@@ -173,8 +171,8 @@
   </div>
 
   <script>
-    const EDGE_FUNCTION_URL = "https://oakssvcgsgpqydrdpdhn.supabase.co/functions/v1/smooth-function";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ha3NzdmNnc2dwcXlkcmRwZGhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY1NDExMzUsImV4cCI6MjA2MjExNzEzNX0.hM0jVSTXs9TzXfeq2Z-b6IeXIdz68VBTE2aBWrh2RYk"; // 🔁 Use your actual anon key here
+    const EDGE_FUNCTION_URL = "https://oakssvcgsgpqydrdpdhn.supabase.co/functions/v1/smooth_functionv2";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ha3NzdmNnc2dwcXlkcmRwZGhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY1NDExMzUsImV4cCI6MjA2MjExNzEzNX0.hM0jVSTXs9TzXfeq2Z-b6IeXIdz68VBTE2aBWrh2RYk";
 
     const rewardBtn = document.getElementById("reward-btn");
     const fancyMessage = document.getElementById("fancy-message");
@@ -225,7 +223,7 @@
 
         const result = await response.json();
 
-        if (!response.ok || !result.reward) {
+        if (!response.ok) {
           showMessage(`⚠️ ${result.error || "Something went wrong."}`);
           rewardBtn.textContent = "Try Again";
           rewardBtn.disabled = false;
@@ -237,7 +235,11 @@
           plate: plateNo
         }));
 
-        showMessage(`✨ Congratulations! You got ${result.reward} pani puri FREE! ✨`);
+        const displayMsg = result.message || (result.reward === 0
+          ? "😢 Oops! You got 0 pani puri free. Better luck next time!"
+          : `✨ Congratulations! You got ${result.reward} pani puri FREE! ✨`);
+
+        showMessage(displayMsg);
         rewardBtn.textContent = "🎉 Reward Claimed";
 
       } catch (error) {
@@ -249,4 +251,4 @@
     });
   </script>
 </body>
-</html> 
+</html>
