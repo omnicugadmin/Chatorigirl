@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ChatoriGirl</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff8e1;
+      color: #333;
+      text-align: center;
+    }
+    header {
+      background: linear-gradient(135deg, #ff4081, #7c4dff);
+      color: white;
+      padding: 30px 10px;
+    }
+    .curved-title {
+      font-family: 'Pacifico', cursive;
+      font-size: 4rem;
+      background: linear-gradient(45deg, #ffd700, #ff4081);
+      -webkit-background-clip: text;
+      color: transparent;
+      transform: rotate(-3deg);
+      margin-bottom: 0;
+      letter-spacing: 2px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+    }
+    .welcome {
+      margin: 40px 20px;
+      font-size: 1.5rem;
+      color: #e65100;
+    }
+    .usp {
+      background-color: #fff3e0;
+      padding: 20px;
+      margin: 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      color: #bf360c;
+      font-size: 1.3rem;
+      animation: pulse 1s ease-in-out infinite alternate;
+    }
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+    .reward-info {
+      font-size: 1.1rem;
+      color: #d84315;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+    .reward-button {
+      background: linear-gradient(45deg, #ff6f00, #ff8f00);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin-top: 10px;
+    }
+    .reward-button:hover:enabled {
+      background: linear-gradient(45deg, #e65100, #ff6f00);
+      transform: scale(1.05);
+    }
+    .reward-button:disabled {
+      background-color: gray;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    #fancy-message {
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 80%;
+      background: linear-gradient(45deg, #ffe082, #ffca28);
+      color: #4e342e;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      animation: slideIn 0.6s ease-out forwards;
+      display: none;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .thank-you {
+      background-color: #ffe0b2;
+      padding: 20px;
+      font-size: 1.2rem;
+      margin: 30px 20px;
+      border-radius: 8px;
+      color: #4e342e;
+    }
+    footer {
+      background-color: #7c4dff;
+      color: white;
+      padding: 15px;
+      font-size: 0.9rem;
+    }
+    #plate-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    #plate-modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    #plate-input {
+      font-size: 1.2rem;
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+      margin-bottom: 15px;
+      width: 80%;
+    }
+    #submit-plate {
+      background-color: #ff9800;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    #submit-plate:hover {
+      background-color: #f57c00;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 class="curved-title">ChatoriGirl</h1>
+    <p>Welcome to <strong>ChatoriGirl - pani puri kahte hai</strong>!</p>
+  </header>
+
+  <div class="welcome">🥳 Craving something tangy? You’re in the right place! Let’s Chalo... pani puri kahte hai!</div>
+  <div class="usp">QR SCANNED SUCCESSFULLY!</div>
+  <div class="reward-info">👉 Click on "Reward" to get free pani puri!</div>
+  <button class="reward-button" id="reward-btn">🎉 Reward</button>
+  <div id="fancy-message"></div>
+  <div class="thank-you">🙏 Thank you for visiting our page and scanning the QR!<br/>Enjoy your pani puri and keep coming back for more!</div>
+  <footer>&copy; 2025 ChatoriGirl. All rights reserved.</footer>
+
+  <div id="plate-modal">
+    <div id="plate-modal-content">
+      <h2>Enter Your Plate Number</h2>
+      <input type="text" id="plate-input" placeholder="e.g. DL8CAF1234" />
+      <br />
+      <button id="submit-plate">Submit</button>
+    </div>
+  </div>
+
+  <script>
+    const EDGE_FUNCTION_URL = "https://oakssvcgsgpqydrdpdhn.supabase.co/functions/v1/smooth_functionv2";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ha3NzdmNnc2dwcXlkcmRwZGhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY1NDExMzUsImV4cCI6MjA2MjExNzEzNX0.hM0jVSTXs9TzXfeq2Z-b6IeXIdz68VBTE2aBWrh2RYk";
+
+    const rewardBtn = document.getElementById("reward-btn");
+    const fancyMessage = document.getElementById("fancy-message");
+    const modal = document.getElementById("plate-modal");
+    const plateInput = document.getElementById("plate-input");
+    const submitPlateBtn = document.getElementById("submit-plate");
+
+  // 📝 Universal Logger
+  async function logEvent(level, message, data = {}) {
+    const logEntry = {
+      level,
+      message,
+      data,
+      url: window.location.href,
+      userAgent: navigator.userAgent,
+      timestamp: new Date().toISOString(),
+    };
+
+    // console par log
+    console[level](`[Frontend ${level}]`, message, data);
+
+    submitPlateBtn.addEventListener("click", async () => {
+      const plateNo = plateInput.value.trim();
+      if (!plateNo) {
+        alert("🚫 Plate number is required!");
+        return;
+      }
+
+  function showMessage(msg) {
+    fancyMessage.textContent = msg;
+    fancyMessage.style.display = "block";
+    logEvent("info", "Message shown to user", { msg });
+  }
+
+  rewardBtn.addEventListener("click", () => {
+    logEvent("info", "Reward button clicked");
+    plateInput.value = "";
+    modal.style.display = "flex";
+  });
+
+  submitPlateBtn.addEventListener("click", async () => {
+    const plateNo = plateInput.value.trim();
+    if (!plateNo) {
+      alert("🚫 Plate number is required!");
+      logEvent("warn", "Plate number missing");
+      return;
+    }
+
+    modal.style.display = "none";
+    rewardBtn.disabled = true;
+    rewardBtn.textContent = "⏳ Checking...";
+    logEvent("info", "Submitting plate number", { plateNo });
+
+    const storedData = JSON.parse(localStorage.getItem("rewardClaim"));
+    if (storedData && storedData.plate === plateNo) {
+      logEvent("info", "User already claimed reward", storedData);
+      showMessage(`✨ You already claimed ${storedData.reward} pani puri FREE! ✨`);
+      rewardBtn.textContent = "🎉 Reward Claimed";
+      return;
+    }
+
+    try {
+      const response = await fetch(EDGE_FUNCTION_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify({
+          action: "get_reward",
+          plate_no: plateNo
+        })
+      });
+
+      const result = await response.json();
+      logEvent("info", "API response received", result);
+
+      if (!response.ok) {
+        showMessage(`⚠️ ${result.error || "Something went wrong."}`);
+        rewardBtn.textContent = "Try Again";
+        rewardBtn.disabled = false;
+        logEvent("error", "API error", { status: response.status, result });
+        return;
+      }
+
+      localStorage.setItem("rewardClaim", JSON.stringify({
+        reward: result.reward,
+        plate: plateNo
+      }));
+
+      const displayMsg = result.message || (result.reward === 0
+        ? "😢 Oops! You got 0 pani puri free. Better luck next time!"
+        : `✨ Congratulations! You got ${result.reward} pani puri FREE! ✨`);
+
+      showMessage(displayMsg);
+      rewardBtn.textContent = "🎉 Reward Claimed";
+
+    } catch (error) {
+      console.error(error);
+      logEvent("error", "Network/API call failed", { error: error.message });
+      showMessage("⚠️ Network error. Please try again.");
+      rewardBtn.textContent = "Try Again";
+      rewardBtn.disabled = false;
+    }
+  });
+
+  // Global error capture
+  window.addEventListener("error", (e) => {
+    logEvent("error", "Frontend JS error", { message: e.message, file: e.filename, line: e.lineno });
+  });
+  window.addEventListener("unhandledrejection", (e) => {
+    logEvent("error", "Unhandled promise rejection", { reason: e.reason });
+  });
+</script>
