@@ -180,110 +180,96 @@
     const plateInput = document.getElementById("plate-input");
     const submitPlateBtn = document.getElementById("submit-plate");
 
-  // 📝 Universal Logger
-  async function logEvent(level, message, data = {}) {
-    const logEntry = {
-      level,
-      message,
-      data,
-      url: window.location.href,
-      userAgent: navigator.userAgent,
-      timestamp: new Date().toISOString(),
-    };
+    // 📝 Universal Logger
+    async function logEvent(level, message, data = {}) {
+      console.log(`[${level}] ${message}`, data);
+    }
 
-    // console par log
-    console[level](`[Frontend ${level}]`, message, data);
+    function showMessage(msg) {
+      fancyMessage.textContent = msg;
+      fancyMessage.style.display = "block";
+      logEvent("info", "Message shown to user", { msg });
+    }
 
+    // ✅ Reward button click → open modal
+    rewardBtn.addEventListener("click", () => {
+      logEvent("info", "Reward button clicked");
+      plateInput.value = "";
+      modal.style.display = "flex";
+    });
+
+    // ✅ Submit plate button → call Supabase edge function
     submitPlateBtn.addEventListener("click", async () => {
       const plateNo = plateInput.value.trim();
       if (!plateNo) {
         alert("🚫 Plate number is required!");
+        logEvent("warn", "Plate number missing");
         return;
       }
 
-  function showMessage(msg) {
-    fancyMessage.textContent = msg;
-    fancyMessage.style.display = "block";
-    logEvent("info", "Message shown to user", { msg });
-  }
+      modal.style.display = "none";
+      rewardBtn.disabled = true;
+      rewardBtn.textContent = "⏳ Checking...";
+      logEvent("info", "Submitting plate number", { plateNo });
 
-  rewardBtn.addEventListener("click", () => {
-    logEvent("info", "Reward button clicked");
-    plateInput.value = "";
-    modal.style.display = "flex";
-  });
+      const storedData = JSON.parse(localStorage.getItem("rewardClaim"));
+      if (storedData && storedData.plate === plateNo) {
+        showMessage(`✨ You already claimed ${storedData.reward} pani puri FREE! ✨`);
+        rewardBtn.textContent = "🎉 Reward Claimed";
+        return;
+      }
 
-  submitPlateBtn.addEventListener("click", async () => {
-    const plateNo = plateInput.value.trim();
-    if (!plateNo) {
-      alert("🚫 Plate number is required!");
-      logEvent("warn", "Plate number missing");
-      return;
-    }
+      try {
+        const response = await fetch(EDGE_FUNCTION_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+          },
+          body: JSON.stringify({
+            action: "get_reward",
+            plate_no: plateNo
+          })
+        });
 
-    modal.style.display = "none";
-    rewardBtn.disabled = true;
-    rewardBtn.textContent = "⏳ Checking...";
-    logEvent("info", "Submitting plate number", { plateNo });
+        const result = await response.json();
+        logEvent("info", "API response received", result);
 
-    const storedData = JSON.parse(localStorage.getItem("rewardClaim"));
-    if (storedData && storedData.plate === plateNo) {
-      logEvent("info", "User already claimed reward", storedData);
-      showMessage(`✨ You already claimed ${storedData.reward} pani puri FREE! ✨`);
-      rewardBtn.textContent = "🎉 Reward Claimed";
-      return;
-    }
+        if (!response.ok) {
+          showMessage(`⚠️ ${result.error || "Something went wrong."}`);
+          rewardBtn.textContent = "Try Again";
+          rewardBtn.disabled = false;
+          return;
+        }
 
-    try {
-      const response = await fetch(EDGE_FUNCTION_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-        },
-        body: JSON.stringify({
-          action: "get_reward",
-          plate_no: plateNo
-        })
-      });
+        localStorage.setItem("rewardClaim", JSON.stringify({
+          reward: result.reward,
+          plate: plateNo
+        }));
 
-      const result = await response.json();
-      logEvent("info", "API response received", result);
+        const displayMsg = result.message || (result.reward === 0
+          ? "😢 Oops! You got 0 pani puri free. Better luck next time!"
+          : `✨ Congratulations! You got ${result.reward} pani puri FREE! ✨`);
 
-      if (!response.ok) {
-        showMessage(`⚠️ ${result.error || "Something went wrong."}`);
+        showMessage(displayMsg);
+        rewardBtn.textContent = "🎉 Reward Claimed";
+
+      } catch (error) {
+        console.error(error);
+        logEvent("error", "Network/API call failed", { error: error.message });
+        showMessage("⚠️ Network error. Please try again.");
         rewardBtn.textContent = "Try Again";
         rewardBtn.disabled = false;
-        logEvent("error", "API error", { status: response.status, result });
-        return;
       }
+    });
 
-      localStorage.setItem("rewardClaim", JSON.stringify({
-        reward: result.reward,
-        plate: plateNo
-      }));
-
-      const displayMsg = result.message || (result.reward === 0
-        ? "😢 Oops! You got 0 pani puri free. Better luck next time!"
-        : `✨ Congratulations! You got ${result.reward} pani puri FREE! ✨`);
-
-      showMessage(displayMsg);
-      rewardBtn.textContent = "🎉 Reward Claimed";
-
-    } catch (error) {
-      console.error(error);
-      logEvent("error", "Network/API call failed", { error: error.message });
-      showMessage("⚠️ Network error. Please try again.");
-      rewardBtn.textContent = "Try Again";
-      rewardBtn.disabled = false;
-    }
-  });
-
-  // Global error capture
-  window.addEventListener("error", (e) => {
-    logEvent("error", "Frontend JS error", { message: e.message, file: e.filename, line: e.lineno });
-  });
-  window.addEventListener("unhandledrejection", (e) => {
-    logEvent("error", "Unhandled promise rejection", { reason: e.reason });
-  });
-</script>
+    // Global error capture
+    window.addEventListener("error", (e) => {
+      logEvent("error", "Frontend JS error", { message: e.message, file: e.filename, line: e.lineno });
+    });
+    window.addEventListener("unhandledrejection", (e) => {
+      logEvent("error", "Unhandled promise rejection", { reason: e.reason });
+    });
+  </script>
+</body>
+</html>
