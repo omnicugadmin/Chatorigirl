@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ChatoriGirl</title>
+  <title>Thealwayshungry</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+
   <style>
     body {
       margin: 0;
@@ -13,22 +14,24 @@
       color: #333;
       text-align: center;
     }
-    header {
-      background: linear-gradient(135deg, #ff4081, #7c4dff);
-      color: white;
-      padding: 30px 10px;
+
+    /* =================== NEW HERO SECTION =================== */
+    .hero-banner {
+      width: 100%;
+      height: 50vh;
+      background-image: url("hero-banner.jpeg"); /* <-- rename your banner image to this */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
-    .curved-title {
-      font-family: 'Pacifico', cursive;
-      font-size: 4rem;
-      background: linear-gradient(45deg, #ffd700, #ff4081);
-      -webkit-background-clip: text;
-      color: transparent;
-      transform: rotate(-3deg);
-      margin-bottom: 0;
-      letter-spacing: 2px;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+
+    @media (max-width: 768px) {
+      .hero-banner {
+        height: 40vh;
+      }
     }
+
+    /* ================= EXISTING CSS BELOW =================== */
     .welcome {
       margin: 40px 20px;
       font-size: 1.5rem;
@@ -106,6 +109,7 @@
       padding: 15px;
       font-size: 0.9rem;
     }
+
     #plate-modal {
       display: none;
       position: fixed;
@@ -148,17 +152,27 @@
   </style>
 </head>
 <body>
+  omnicugadmin-patch-1
+
   <header>
     <h1 class="curved-title">TheAlwaysHungry</h1>
     <p>Welcome to <strong>TheAlwaysHungry - aapka apna adda</strong>!</p>
   </header>
+ main
 
+  <!-- ================= HERO SECTION (REPLACED HEADER) =============== -->
+  <section class="hero-banner"></section>
+
+  <!-- ========== original content untouched ========== -->
   <div class="welcome">🥳 Craving something tangy? You’re in the right place! Let’s Chalo... pani puri kahte hai!</div>
   <div class="usp">QR SCANNED SUCCESSFULLY!</div>
   <div class="reward-info">👉 Click on "Reward" to get free pani puri!</div>
   <button class="reward-button" id="reward-btn">🎉 Reward</button>
+
   <div id="fancy-message"></div>
+
   <div class="thank-you">🙏 Thank you for visiting our page and scanning the QR!<br/>Enjoy your pani puri and keep coming back for more!</div>
+
   <footer>&copy; 2025 ChatoriGirl. All rights reserved.</footer>
 
   <div id="plate-modal">
