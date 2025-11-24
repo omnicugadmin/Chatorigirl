@@ -1,0 +1,15 @@
+
+    .hero-banner {
+      width: 100%;
+      height: 50vh;
+      background-image: url("/heroo-banner.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+     @media (max-width: 768px) {
+      .hero-banner {
+        height: 40vh;
+      }
+    }
