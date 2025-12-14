@@ -15,23 +15,22 @@
       text-align: center;
     }
 
-    /* =================== NEW HERO SECTION =================== */
+    /* =================== HERO SECTION =================== */
     .hero-banner {
       width: 100%;
       height: 50vh;
-      background-image: url("heroo-banner.jpeg"); /* <-- rename your banner image to this */
+      background-image: url("hero-banner.jpeg");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
     }
-
     @media (max-width: 768px) {
       .hero-banner {
         height: 40vh;
       }
     }
 
-    /* ================= EXISTING CSS BELOW =================== */
+    /* ================= EXISTING STYLES =================== */
     .welcome {
       margin: 40px 20px;
       font-size: 1.5rem;
@@ -88,12 +87,7 @@
       font-weight: bold;
       border-radius: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      animation: slideIn 0.6s ease-out forwards;
       display: none;
-    }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
     }
     .thank-you {
       background-color: #ffe0b2;
@@ -110,6 +104,7 @@
       font-size: 0.9rem;
     }
 
+    /* ===================== PAYMENT + PLATE MODAL ===================== */
     #plate-modal {
       display: none;
       position: fixed;
@@ -118,66 +113,124 @@
       top: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.55);
       justify-content: center;
       align-items: center;
     }
+
     #plate-modal-content {
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      width: 40%;
+      max-width: 320px;
+      border-radius: 20px;
+      padding: 35px;
+      background: #ffffff;
+      box-shadow: 0px 8px 25px rgba(0,0,0,0.25);
+      font-family: 'Segoe UI', sans-serif;
+      animation: pop 0.3s ease-out;
     }
-    #plate-input {
-      font-size: 1.2rem;
-      padding: 10px;
-      border-radius: 10px;
-      border: 2px solid #ccc;
-      margin-bottom: 15px;
-      width: 80%;
+
+    @keyframes pop {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
+
+    #plate-modal-content h2 {
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 25px;
+      color: #222;
+    }
+
+    #plate-input,
+    #payment-option {
+      width: 100%;
+      padding: 14px;
+      font-size: 1.1rem;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      outline: none;
+      box-sizing: border-box;
+      transition: 0.3s ease;
+      background: #fafafa;
+    }
+
+    #plate-input:focus,
+    #payment-option:focus {
+      border-color: #ff8f00;
+      box-shadow: 0 0 6px rgba(255,140,0,0.4);
+      background: #fff;
+    }
+
+    .modal-label {
+      text-align: left;
+      width: 100%;
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      margin-top: 15px;
+      color: #444;
+      font-weight: 600;
+    }
+
     #submit-plate {
       background-color: #ff9800;
       border: none;
       color: white;
-      padding: 10px 20px;
-      border-radius: 20px;
+      padding: 15px 60px;
+      border-radius: 10px;
       font-size: 1rem;
       cursor: pointer;
+     margin-top: 15px;
+      transition: 0.25s ease;
     }
     #submit-plate:hover {
       background-color: #f57c00;
     }
   </style>
 </head>
-<body>
-  </header>
 
-  <!-- ================= HERO SECTION (REPLACED HEADER) =============== -->
+<body>
+
+  <!-- HERO -->
   <section class="hero-banner"></section>
 
-  <!-- ========== original content untouched ========== -->
+  <!-- Original Content -->
   <div class="welcome">🥳 Craving something tangy? You’re in the right place! Let’s Chalo... pani puri kahte hai!</div>
   <div class="usp">QR SCANNED SUCCESSFULLY!</div>
   <div class="reward-info">👉 Click on "Reward" to get free pani puri!</div>
+
   <button class="reward-button" id="reward-btn">🎉 Reward</button>
 
   <div id="fancy-message"></div>
 
-  <div class="thank-you">🙏 Thank you for visiting our page and scanning the QR!<br/>Enjoy your pani puri and keep coming back for more!</div>
+  <div class="thank-you">
+    🙏 Thank you for visiting our page and scanning the QR!<br/>Enjoy your pani puri and keep coming back for more!
+  </div>
 
   <footer>&copy; 2025 ChatoriGirl. All rights reserved.</footer>
 
+
+  <!-- ===================== MODAL HTML ===================== -->
   <div id="plate-modal">
     <div id="plate-modal-content">
-      <h2>Enter Your Plate Number</h2>
-      <input type="text" id="plate-input" placeholder="e.g. DL8CAF1234" />
-      <br />
+
+      <h2>Enter Your Details</h2>
+
+      <label class="modal-label">Plate Number</label>
+      <input type="text" id="plate-input" placeholder="e.g. DL8CAF1234">
+
+      <label class="modal-label">Select Payment Option</label>
+      <select id="payment-option">
+        <option value="Cash">Cash</option>
+        <option value="Online">Online</option>
+      </select>
+
       <button id="submit-plate">Submit</button>
+
     </div>
   </div>
 
+  <!-- ===================== JS ===================== -->
   <script>
     const EDGE_FUNCTION_URL = "https://oakssvcgsgpqydrdpdhn.supabase.co/functions/v1/smooth_functionv2";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ha3NzdmNnc2dwcXlkcmRwZGhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY1NDExMzUsImV4cCI6MjA2MjExNzEzNX0.hM0jVSTXs9TzXfeq2Z-b6IeXIdz68VBTE2aBWrh2RYk";
@@ -186,6 +239,7 @@
     const fancyMessage = document.getElementById("fancy-message");
     const modal = document.getElementById("plate-modal");
     const plateInput = document.getElementById("plate-input");
+    const paymentOption = document.getElementById("payment-option").value;
     const submitPlateBtn = document.getElementById("submit-plate");
 
     // 📝 Universal Logger
@@ -209,6 +263,7 @@
     // ✅ Submit plate button → call Supabase edge function
     submitPlateBtn.addEventListener("click", async () => {
       const plateNo = plateInput.value.trim();
+      const paymentOption = document.getElementById("payment-option").value;
       if (!plateNo) {
         alert("🚫 Plate number is required!");
         logEvent("warn", "Plate number missing");
@@ -236,7 +291,8 @@
           },
           body: JSON.stringify({
             action: "get_reward",
-            plate_no: plateNo
+            plate_no: plateNo,
+            payment_mode: paymentOption
           })
         });
 
@@ -281,6 +337,3 @@
   </script>
 </body>
 </html>
-
-
-
