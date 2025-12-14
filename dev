@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ChatoriGirl</title>
+  <title>Thealwayshungry</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+
   <style>
     body {
       margin: 0;
@@ -13,22 +14,23 @@
       color: #333;
       text-align: center;
     }
-    header {
-      background: linear-gradient(135deg, #ff4081, #7c4dff);
-      color: white;
-      padding: 30px 10px;
+
+    /* =================== HERO SECTION =================== */
+    .hero-banner {
+      width: 100%;
+      height: 50vh;
+      background-image: url("hero-banner.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
-    .curved-title {
-      font-family: 'Pacifico', cursive;
-      font-size: 4rem;
-      background: linear-gradient(45deg, #ffd700, #ff4081);
-      -webkit-background-clip: text;
-      color: transparent;
-      transform: rotate(-3deg);
-      margin-bottom: 0;
-      letter-spacing: 2px;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+    @media (max-width: 768px) {
+      .hero-banner {
+        height: 40vh;
+      }
     }
+
+    /* ================= EXISTING STYLES =================== */
     .welcome {
       margin: 40px 20px;
       font-size: 1.5rem;
@@ -85,12 +87,7 @@
       font-weight: bold;
       border-radius: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      animation: slideIn 0.6s ease-out forwards;
       display: none;
-    }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
     }
     .thank-you {
       background-color: #ffe0b2;
@@ -106,6 +103,8 @@
       padding: 15px;
       font-size: 0.9rem;
     }
+
+    /* ===================== PAYMENT + PLATE MODAL ===================== */
     #plate-modal {
       display: none;
       position: fixed;
@@ -114,62 +113,199 @@
       top: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.55);
       justify-content: center;
       align-items: center;
     }
+
     #plate-modal-content {
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      width: 40%;
+      max-width: 320px;
+      border-radius: 20px;
+      padding: 35px;
+      background: #ffffff;
+      box-shadow: 0px 8px 25px rgba(0,0,0,0.25);
+      font-family: 'Segoe UI', sans-serif;
+      animation: pop 0.3s ease-out;
+      overflow: visible; /* 🔥 REQUIRED */
     }
-    #plate-input {
-      font-size: 1.2rem;
-      padding: 10px;
-      border-radius: 10px;
-      border: 2px solid #ccc;
-      margin-bottom: 15px;
-      width: 80%;
+
+    @keyframes pop {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
+
+    #plate-modal-content h2 {
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 25px;
+      color: #222;
+    }
+
+    #plate-input,
+    #payment-option {
+      width: 100%;
+      padding: 14px;
+      font-size: 1.1rem;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      outline: none;
+      box-sizing: border-box;
+      transition: 0.3s ease;
+      background: #fafafa;
+    }
+
+    #plate-input:focus,
+    #payment-option:focus {
+      border-color: #ff8f00;
+      box-shadow: 0 0 6px rgba(255,140,0,0.4);
+      background: #fff;
+    }
+
+    .modal-label {
+      text-align: left;
+      width: 100%;
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      margin-top: 15px;
+      color: #444;
+      font-weight: 600;
+    }
+
     #submit-plate {
       background-color: #ff9800;
       border: none;
       color: white;
-      padding: 10px 20px;
-      border-radius: 20px;
+      padding: 15px 60px;
+      border-radius: 10px;
       font-size: 1rem;
       cursor: pointer;
+     margin-top: 15px;
+      transition: 0.25s ease;
     }
     #submit-plate:hover {
       background-color: #f57c00;
     }
+
+/* ===== CUSTOM DROPDOWN (MOBILE FRIENDLY) ===== */
+
+.custom-select {
+  width: 100%;
+  position: relative;
+  margin-top: 5px;
+}
+
+.selected {
+  padding: 14px;
+  display: flex;
+padding-right: 40px; /* arrow space */
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  background: #fafafa;
+  font-size: 1.1rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+
+/* Arrow icon */
+.selected::after {
+  content: "▾";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  color: #888;
+  pointer-events: none;
+}
+
+.options {
+  display: none;
+  text-align: left;
+  position: absolute;
+  top: calc(100% + 8px); /* gap between input & dropdown */
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  overflow: hidden;
+  z-index: 2000;
+  animation: dropdown 0.2s ease-out;
+}
+
+.options div {
+  padding: 14px;
+  cursor: pointer;
+  font-size: 1.05rem;
+  border-bottom: 1px solid #eee;
+}
+
+.options div:hover {
+  background: #fff3e0;
+}
+.options div:last-child {
+  border-bottom: none;
+}
+
+
   </style>
 </head>
-<body>
-  <header>
-    <h1 class="curved-title">TheAlwaysHungry</h1>
-    <p>Welcome to <strong>TheAlwaysHungry - aapka apna adda</strong>!</p>
-  </header>
 
+<body>
+
+  <!-- HERO -->
+  <section class="hero-banner"></section>
+
+  <!-- Original Content -->
   <div class="welcome">🥳 Craving something tangy? You’re in the right place! Let’s Chalo... pani puri kahte hai!</div>
   <div class="usp">QR SCANNED SUCCESSFULLY!</div>
   <div class="reward-info">👉 Click on "Reward" to get free pani puri!</div>
+
   <button class="reward-button" id="reward-btn">🎉 Reward</button>
+
   <div id="fancy-message"></div>
-  <div class="thank-you">🙏 Thank you for visiting our page and scanning the QR!<br/>Enjoy your pani puri and keep coming back for more!</div>
+
+  <div class="thank-you">
+    🙏 Thank you for visiting our page and scanning the QR!<br/>Enjoy your pani puri and keep coming back for more!
+  </div>
+
   <footer>&copy; 2025 ChatoriGirl. All rights reserved.</footer>
 
+
+  <!-- ===================== MODAL HTML ===================== -->
   <div id="plate-modal">
     <div id="plate-modal-content">
-      <h2>Enter Your Plate Number</h2>
-      <input type="text" id="plate-input" placeholder="e.g. DL8CAF1234" />
-      <br />
+
+      <h2>Enter Your Details</h2>
+
+      <label class="modal-label">Plate Number</label>
+      <input type="text" id="plate-input" placeholder="e.g. DL8CAF1234">
+
+      <label class="modal-label">Select Payment Option</label>
+
+
+      <div class="custom-select">
+  <div class="selected" id="selectedPayment">Online</div>
+  <div class="options">
+    <div data-value="Cash">Cash</div>
+    <div data-value="Online">Online</div>
+  </div>
+</div>
+
+<input type="hidden" id="payment-option" value="Online">
+
+
+
       <button id="submit-plate">Submit</button>
+
     </div>
   </div>
 
+  <!-- ===================== JS ===================== -->
   <script>
     const EDGE_FUNCTION_URL = "https://oakssvcgsgpqydrdpdhn.supabase.co/functions/v1/smooth_functionv2";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ha3NzdmNnc2dwcXlkcmRwZGhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY1NDExMzUsImV4cCI6MjA2MjExNzEzNX0.hM0jVSTXs9TzXfeq2Z-b6IeXIdz68VBTE2aBWrh2RYk";
@@ -178,112 +314,150 @@
     const fancyMessage = document.getElementById("fancy-message");
     const modal = document.getElementById("plate-modal");
     const plateInput = document.getElementById("plate-input");
+    const paymentOption = document.getElementById("payment-option").value;
     const submitPlateBtn = document.getElementById("submit-plate");
+   
 
-  // 📝 Universal Logger
-  async function logEvent(level, message, data = {}) {
-    const logEntry = {
-      level,
-      message,
-      data,
-      url: window.location.href,
-      userAgent: navigator.userAgent,
-      timestamp: new Date().toISOString(),
-    };
 
-    // console par log
-    console[level](`[Frontend ${level}]`, message, data);
+    // 📝 Universal Logger
+    async function logEvent(level, message, data = {}) {
+      console.log(`[${level}] ${message}`, data);
+    }
 
+    function showMessage(msg) {
+      fancyMessage.textContent = msg;
+      fancyMessage.style.display = "block";
+      logEvent("info", "Message shown to user", { msg });
+    }
+
+    // ✅ Reward button click → open modal
+    rewardBtn.addEventListener("click", () => {
+      logEvent("info", "Reward button clicked");
+      plateInput.value = "";
+      modal.style.display = "flex";
+    });
+
+    // ✅ Submit plate button → call Supabase edge function
     submitPlateBtn.addEventListener("click", async () => {
       const plateNo = plateInput.value.trim();
+      const paymentOption = document.getElementById("payment-option").value;
       if (!plateNo) {
         alert("🚫 Plate number is required!");
+        logEvent("warn", "Plate number missing");
         return;
       }
 
-  function showMessage(msg) {
-    fancyMessage.textContent = msg;
-    fancyMessage.style.display = "block";
-    logEvent("info", "Message shown to user", { msg });
-  }
+      modal.style.display = "none";
+      rewardBtn.disabled = true;
+      rewardBtn.textContent = "⏳ Checking...";
+      logEvent("info", "Submitting plate number", { plateNo });
 
-  rewardBtn.addEventListener("click", () => {
-    logEvent("info", "Reward button clicked");
-    plateInput.value = "";
-    modal.style.display = "flex";
-  });
+      const storedData = JSON.parse(localStorage.getItem("rewardClaim"));
+      if (storedData && storedData.plate === plateNo) {
+        showMessage(`✨ You already claimed ${storedData.reward} pani puri FREE! ✨`);
+        rewardBtn.textContent = "🎉 Reward Claimed";
+        return;
+      }
 
-  submitPlateBtn.addEventListener("click", async () => {
-    const plateNo = plateInput.value.trim();
-    if (!plateNo) {
-      alert("🚫 Plate number is required!");
-      logEvent("warn", "Plate number missing");
-      return;
-    }
+      try {
+        const response = await fetch(EDGE_FUNCTION_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+          },
+          body: JSON.stringify({
+            action: "get_reward",
+            plate_no: plateNo,
+            payment_mode: paymentOption
+          })
+        });
 
-    modal.style.display = "none";
-    rewardBtn.disabled = true;
-    rewardBtn.textContent = "⏳ Checking...";
-    logEvent("info", "Submitting plate number", { plateNo });
+        const result = await response.json();
+        logEvent("info", "API response received", result);
 
-    const storedData = JSON.parse(localStorage.getItem("rewardClaim"));
-    if (storedData && storedData.plate === plateNo) {
-      logEvent("info", "User already claimed reward", storedData);
-      showMessage(`✨ You already claimed ${storedData.reward} pani puri FREE! ✨`);
-      rewardBtn.textContent = "🎉 Reward Claimed";
-      return;
-    }
+        if (!response.ok) {
+          showMessage(`⚠️ ${result.error || "Something went wrong."}`);
+          rewardBtn.textContent = "Try Again";
+          rewardBtn.disabled = false;
+          return;
+        }
 
-    try {
-      const response = await fetch(EDGE_FUNCTION_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-        },
-        body: JSON.stringify({
-          action: "get_reward",
-          plate_no: plateNo
-        })
-      });
+        localStorage.setItem("rewardClaim", JSON.stringify({
+          reward: result.reward,
+          plate: plateNo
+        }));
 
-      const result = await response.json();
-      logEvent("info", "API response received", result);
+        const displayMsg = result.message || (result.reward === 0
+          ? "😢 Oops! You got 0 pani puri free. Better luck next time!"
+          : `✨ Congratulations! You got ${result.reward} pani puri FREE! ✨`);
 
-      if (!response.ok) {
-        showMessage(`⚠️ ${result.error || "Something went wrong."}`);
+        showMessage(displayMsg);
+        rewardBtn.textContent = "🎉 Reward Claimed";
+
+      } catch (error) {
+        console.error(error);
+        logEvent("error", "Network/API call failed", { error: error.message });
+        showMessage("⚠️ Network error. Please try again.");
         rewardBtn.textContent = "Try Again";
         rewardBtn.disabled = false;
-        logEvent("error", "API error", { status: response.status, result });
-        return;
       }
+    });
 
-      localStorage.setItem("rewardClaim", JSON.stringify({
-        reward: result.reward,
-        plate: plateNo
-      }));
 
-      const displayMsg = result.message || (result.reward === 0
-        ? "😢 Oops! You got 0 pani puri free. Better luck next time!"
-        : `✨ Congratulations! You got ${result.reward} pani puri FREE! ✨`);
+// ===== CUSTOM PAYMENT DROPDOWN =====
+const selectedPayment = document.getElementById("selectedPayment");
+const optionsBox = document.querySelector(".options");
+const hiddenPaymentInput = document.getElementById("payment-option");
 
-      showMessage(displayMsg);
-      rewardBtn.textContent = "🎉 Reward Claimed";
 
-    } catch (error) {
-      console.error(error);
-      logEvent("error", "Network/API call failed", { error: error.message });
-      showMessage("⚠️ Network error. Please try again.");
-      rewardBtn.textContent = "Try Again";
-      rewardBtn.disabled = false;
+function updateOptions() {
+  const current = hiddenPaymentInput.value;
+
+  optionsBox.querySelectorAll("div").forEach(opt => {
+    if (opt.dataset.value === current) {
+      opt.style.display = "none";   // 🔥 selected wala hide
+    } else {
+      opt.style.display = "block";  // 🔥 sirf dusra dikhe
     }
   });
+}
 
-  // Global error capture
-  window.addEventListener("error", (e) => {
-    logEvent("error", "Frontend JS error", { message: e.message, file: e.filename, line: e.lineno });
+
+selectedPayment.addEventListener("click", () => {
+  updateOptions();
+  optionsBox.style.display =
+    optionsBox.style.display === "block" ? "none" : "block";
+});
+
+
+
+optionsBox.querySelectorAll("div").forEach(option => {
+  option.addEventListener("click", () => {
+    selectedPayment.innerText = option.innerText;
+    hiddenPaymentInput.value = option.dataset.value;
+    optionsBox.style.display = "none";
   });
-  window.addEventListener("unhandledrejection", (e) => {
-    logEvent("error", "Unhandled promise rejection", { reason: e.reason });
-  });
-</script>
+});
+
+
+
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".custom-select")) {
+    optionsBox.style.display = "none";
+  }
+});
+
+
+
+
+    // Global error capture
+    window.addEventListener("error", (e) => {
+      logEvent("error", "Frontend JS error", { message: e.message, file: e.filename, line: e.lineno });
+    });
+    window.addEventListener("unhandledrejection", (e) => {
+      logEvent("error", "Unhandled promise rejection", { reason: e.reason });
+    });	
+  </script>
+</body>
+</html>
