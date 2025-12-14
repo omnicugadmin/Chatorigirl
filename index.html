@@ -289,14 +289,14 @@ padding-right: 40px; /* arrow space */
 
 
       <div class="custom-select">
-  <div class="selected" id="selectedPayment">Cash</div>
+  <div class="selected" id="selectedPayment">Online</div>
   <div class="options">
     <div data-value="Cash">Cash</div>
     <div data-value="Online">Online</div>
   </div>
 </div>
 
-<input type="hidden" id="payment-option" value="Cash">
+<input type="hidden" id="payment-option" value="Online">
 
 
 
@@ -316,7 +316,7 @@ padding-right: 40px; /* arrow space */
     const plateInput = document.getElementById("plate-input");
     const paymentOption = document.getElementById("payment-option").value;
     const submitPlateBtn = document.getElementById("submit-plate");
-
+   
 
 
     // 📝 Universal Logger
@@ -410,10 +410,27 @@ const selectedPayment = document.getElementById("selectedPayment");
 const optionsBox = document.querySelector(".options");
 const hiddenPaymentInput = document.getElementById("payment-option");
 
+
+function updateOptions() {
+  const current = hiddenPaymentInput.value;
+
+  optionsBox.querySelectorAll("div").forEach(opt => {
+    if (opt.dataset.value === current) {
+      opt.style.display = "none";   // 🔥 selected wala hide
+    } else {
+      opt.style.display = "block";  // 🔥 sirf dusra dikhe
+    }
+  });
+}
+
+
 selectedPayment.addEventListener("click", () => {
+  updateOptions();
   optionsBox.style.display =
     optionsBox.style.display === "block" ? "none" : "block";
 });
+
+
 
 optionsBox.querySelectorAll("div").forEach(option => {
   option.addEventListener("click", () => {
@@ -422,6 +439,8 @@ optionsBox.querySelectorAll("div").forEach(option => {
     optionsBox.style.display = "none";
   });
 });
+
+
 
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".custom-select")) {
@@ -438,7 +457,7 @@ document.addEventListener("click", (e) => {
     });
     window.addEventListener("unhandledrejection", (e) => {
       logEvent("error", "Unhandled promise rejection", { reason: e.reason });
-    });
+    });	
   </script>
 </body>
 </html>
