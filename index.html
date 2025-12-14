@@ -127,6 +127,7 @@
       box-shadow: 0px 8px 25px rgba(0,0,0,0.25);
       font-family: 'Segoe UI', sans-serif;
       animation: pop 0.3s ease-out;
+      overflow: visible; /* 🔥 REQUIRED */
     }
 
     @keyframes pop {
@@ -186,6 +187,71 @@
     #submit-plate:hover {
       background-color: #f57c00;
     }
+
+/* ===== CUSTOM DROPDOWN (MOBILE FRIENDLY) ===== */
+
+.custom-select {
+  width: 100%;
+  position: relative;
+  margin-top: 5px;
+}
+
+.selected {
+  padding: 14px;
+  display: flex;
+padding-right: 40px; /* arrow space */
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  background: #fafafa;
+  font-size: 1.1rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+
+/* Arrow icon */
+.selected::after {
+  content: "▾";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  color: #888;
+  pointer-events: none;
+}
+
+.options {
+  display: none;
+  text-align: left;
+  position: absolute;
+  top: calc(100% + 8px); /* gap between input & dropdown */
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  overflow: hidden;
+  z-index: 2000;
+  animation: dropdown 0.2s ease-out;
+}
+
+.options div {
+  padding: 14px;
+  cursor: pointer;
+  font-size: 1.05rem;
+  border-bottom: 1px solid #eee;
+}
+
+.options div:hover {
+  background: #fff3e0;
+}
+.options div:last-child {
+  border-bottom: none;
+}
+
+
   </style>
 </head>
 
@@ -220,10 +286,19 @@
       <input type="text" id="plate-input" placeholder="e.g. DL8CAF1234">
 
       <label class="modal-label">Select Payment Option</label>
-      <select id="payment-option">
-        <option value="Cash">Cash</option>
-        <option value="Online">Online</option>
-      </select>
+
+
+      <div class="custom-select">
+  <div class="selected" id="selectedPayment">Cash</div>
+  <div class="options">
+    <div data-value="Cash">Cash</div>
+    <div data-value="Online">Online</div>
+  </div>
+</div>
+
+<input type="hidden" id="payment-option" value="Cash">
+
+
 
       <button id="submit-plate">Submit</button>
 
@@ -241,6 +316,8 @@
     const plateInput = document.getElementById("plate-input");
     const paymentOption = document.getElementById("payment-option").value;
     const submitPlateBtn = document.getElementById("submit-plate");
+
+
 
     // 📝 Universal Logger
     async function logEvent(level, message, data = {}) {
@@ -326,6 +403,34 @@
         rewardBtn.disabled = false;
       }
     });
+
+
+// ===== CUSTOM PAYMENT DROPDOWN =====
+const selectedPayment = document.getElementById("selectedPayment");
+const optionsBox = document.querySelector(".options");
+const hiddenPaymentInput = document.getElementById("payment-option");
+
+selectedPayment.addEventListener("click", () => {
+  optionsBox.style.display =
+    optionsBox.style.display === "block" ? "none" : "block";
+});
+
+optionsBox.querySelectorAll("div").forEach(option => {
+  option.addEventListener("click", () => {
+    selectedPayment.innerText = option.innerText;
+    hiddenPaymentInput.value = option.dataset.value;
+    optionsBox.style.display = "none";
+  });
+});
+
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".custom-select")) {
+    optionsBox.style.display = "none";
+  }
+});
+
+
+
 
     // Global error capture
     window.addEventListener("error", (e) => {
