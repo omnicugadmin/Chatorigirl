@@ -8,9 +8,12 @@ export default function Home() {
   const [rewardMsg, setRewardMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [rewardClaimed, setRewardClaimed] = useState(false);
+  const [paymentOption, setPaymentOption] = useState("Cash");
+
 
   const handleRewardClick = () => {
     setPlateNo("");
+    setPaymentOption("Cash");
     setModalOpen(true);
   };
 
@@ -28,7 +31,7 @@ export default function Home() {
       const res = await fetch("/api/reward", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "get_reward", plate_no: plateNo }),
+        body: JSON.stringify({ action: "get_reward", plate_no: plateNo ,payment_mode: paymentOption }),
       });
 
       const data = await res.json();
@@ -88,8 +91,11 @@ export default function Home() {
           fontWeight: "bold",
           color: "#bf360c",
           fontSize: "1.3rem",
+          animation:"pulse 1s ease-in-out infinite alternate"
         }}
+        className="usp"
       >
+       
         QR SCANNED SUCCESSFULLY!
       </div>
 
@@ -170,67 +176,44 @@ export default function Home() {
           fontSize: "0.9rem",
         }}
       >
-        © 2025 The Always Hungry. All rights reserved.
+        © 2025 TheAlwaysHungry. All rights reserved.
       </footer>
 
-      {/* MODAL */}
-      {modalOpen && (
-        <div
-          style={{
-            position: "fixed",
-            zIndex: 1000,
-            left: 0,
-            top: 0,
-            width: "100%",
-            height: "100%",
-            background: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              background: "white",
-              padding: "30px",
-              borderRadius: "15px",
-              textAlign: "center",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-            }}
-          >
-            <h2>Enter Your Plate Number</h2>
-            <input
-              type="text"
-              value={plateNo}
-              onChange={(e) => setPlateNo(e.target.value)}
-              placeholder="e.g. DL8CAF1234"
-              style={{
-                fontSize: "1.2rem",
-                padding: "10px",
-                borderRadius: "10px",
-                border: "2px solid #ccc",
-                marginBottom: "15px",
-                width: "80%",
-              }}
-            />
-            <br />
-            <button
-              onClick={handleSubmit}
-              style={{
-                backgroundColor: "#ff9800",
-                border: "none",
-                color: "white",
-                padding: "10px 20px",
-                borderRadius: "20px",
-                fontSize: "1rem",
-                cursor: "pointer",
-              }}
-            >
-              Submit
-            </button>
-          </div>
-        </div>
-      )}
+  {modalOpen && (
+    <div id="plate-modal">
+    <div id="plate-modal-content">
+
+       <h2>Enter Your Details</h2>
+
+      <label className="modal-label">Plate Number</label>
+
+      <input 
+      type="text" 
+      id="plate-input" 
+        value={plateNo}
+        onChange={(e) => setPlateNo(e.target.value)}
+        placeholder="e.g. DL8CAF1234"
+/>
+ 
+      <label className="modal-label">Select Payment Option</label>
+
+      <select 
+         id="payment-option"
+         value={paymentOption}
+         onChange={(e) => setPaymentOption(e.target.value)}>
+        <option value="Cash">Cash</option>
+        <option value="Online">Online</option>
+      </select>
+
+      <button id="submit-plate" 
+       onClick={handleSubmit}
+      >Submit</button>
+
     </div>
-  );
+</div>
+)}
+
+</div>
+);
 }
+

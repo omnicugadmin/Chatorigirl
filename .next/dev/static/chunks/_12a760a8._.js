@@ -19,8 +19,10 @@ function Home() {
     const [rewardMsg, setRewardMsg] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [rewardClaimed, setRewardClaimed] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [paymentOption, setPaymentOption] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("Cash");
     const handleRewardClick = ()=>{
         setPlateNo("");
+        setPaymentOption("Cash");
         setModalOpen(true);
     };
     const handleSubmit = async ()=>{
@@ -39,7 +41,8 @@ function Home() {
                 },
                 body: JSON.stringify({
                     action: "get_reward",
-                    plate_no: plateNo
+                    plate_no: plateNo,
+                    payment_mode: paymentOption
                 })
             });
             const data = await res.json();
@@ -66,7 +69,7 @@ function Home() {
                 className: "hero-banner"
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 65,
+                lineNumber: 68,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
@@ -76,7 +79,7 @@ function Home() {
                 }
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 68,
+                lineNumber: 71,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -88,7 +91,7 @@ function Home() {
                 children: "🥳 Craving something tangy? You’re in the right place! Let’s Chalo... pani puri kahte hai!"
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 78,
+                lineNumber: 81,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -99,12 +102,14 @@ function Home() {
                     borderRadius: "10px",
                     fontWeight: "bold",
                     color: "#bf360c",
-                    fontSize: "1.3rem"
+                    fontSize: "1.3rem",
+                    animation: "pulse 1s ease-in-out infinite alternate"
                 },
+                className: "usp",
                 children: "QR SCANNED SUCCESSFULLY!"
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 82,
+                lineNumber: 85,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -117,7 +122,7 @@ function Home() {
                 children: '👉 Click on "Reward" to get free pani puri!'
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 96,
+                lineNumber: 102,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -137,7 +142,7 @@ function Home() {
                 children: loading ? "⏳ Checking..." : rewardClaimed ? "🎉 Reward Claimed" : "🎉 Reward"
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 108,
+                lineNumber: 114,
                 columnNumber: 7
             }, this),
             rewardMsg && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -155,7 +160,7 @@ function Home() {
                 children: rewardMsg
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 132,
+                lineNumber: 138,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -171,14 +176,14 @@ function Home() {
                     "🙏 Thank you for visiting our page and scanning the QR! ",
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                         fileName: "[project]/app/page.js",
-                        lineNumber: 160,
+                        lineNumber: 166,
                         columnNumber: 65
                     }, this),
                     "Enjoy your pani puri and keep coming back for more!"
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 150,
+                lineNumber: 156,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
@@ -188,100 +193,106 @@ function Home() {
                     padding: "15px",
                     fontSize: "0.9rem"
                 },
-                children: "© 2025 The Always Hungry. All rights reserved."
+                children: "© 2025 TheAlwaysHungry. All rights reserved."
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 165,
+                lineNumber: 171,
                 columnNumber: 7
             }, this),
             modalOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                style: {
-                    position: "fixed",
-                    zIndex: 1000,
-                    left: 0,
-                    top: 0,
-                    width: "100%",
-                    height: "100%",
-                    background: "rgba(0, 0, 0, 0.5)",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                },
+                id: "plate-modal",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    style: {
-                        background: "white",
-                        padding: "30px",
-                        borderRadius: "15px",
-                        textAlign: "center",
-                        boxShadow: "0 4px 12px rgba(0,0,0,0.3)"
-                    },
+                    id: "plate-modal-content",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                            children: "Enter Your Plate Number"
+                            children: "Enter Your Details"
                         }, void 0, false, {
                             fileName: "[project]/app/page.js",
-                            lineNumber: 201,
-                            columnNumber: 13
+                            lineNumber: 186,
+                            columnNumber: 8
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                            className: "modal-label",
+                            children: "Plate Number"
+                        }, void 0, false, {
+                            fileName: "[project]/app/page.js",
+                            lineNumber: 188,
+                            columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                             type: "text",
+                            id: "plate-input",
                             value: plateNo,
                             onChange: (e)=>setPlateNo(e.target.value),
-                            placeholder: "e.g. DL8CAF1234",
-                            style: {
-                                fontSize: "1.2rem",
-                                padding: "10px",
-                                borderRadius: "10px",
-                                border: "2px solid #ccc",
-                                marginBottom: "15px",
-                                width: "80%"
-                            }
+                            placeholder: "e.g. DL8CAF1234"
                         }, void 0, false, {
                             fileName: "[project]/app/page.js",
-                            lineNumber: 202,
-                            columnNumber: 13
+                            lineNumber: 190,
+                            columnNumber: 7
                         }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                            className: "modal-label",
+                            children: "Select Payment Option"
+                        }, void 0, false, {
                             fileName: "[project]/app/page.js",
-                            lineNumber: 216,
-                            columnNumber: 13
+                            lineNumber: 198,
+                            columnNumber: 7
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                            id: "payment-option",
+                            value: paymentOption,
+                            onChange: (e)=>setPaymentOption(e.target.value),
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                    value: "Cash",
+                                    children: "Cash"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/page.js",
+                                    lineNumber: 204,
+                                    columnNumber: 9
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                    value: "Online",
+                                    children: "Online"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/page.js",
+                                    lineNumber: 205,
+                                    columnNumber: 9
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/app/page.js",
+                            lineNumber: 200,
+                            columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            id: "submit-plate",
                             onClick: handleSubmit,
-                            style: {
-                                backgroundColor: "#ff9800",
-                                border: "none",
-                                color: "white",
-                                padding: "10px 20px",
-                                borderRadius: "20px",
-                                fontSize: "1rem",
-                                cursor: "pointer"
-                            },
                             children: "Submit"
                         }, void 0, false, {
                             fileName: "[project]/app/page.js",
-                            lineNumber: 217,
-                            columnNumber: 13
+                            lineNumber: 208,
+                            columnNumber: 7
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/page.js",
-                    lineNumber: 192,
-                    columnNumber: 11
+                    lineNumber: 184,
+                    columnNumber: 5
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 178,
-                columnNumber: 9
+                lineNumber: 183,
+                columnNumber: 5
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/page.js",
-        lineNumber: 55,
+        lineNumber: 58,
         columnNumber: 5
     }, this);
 }
-_s(Home, "vt7zUtGz1gngvb2SJW2a9lgzjRQ=");
+_s(Home, "br9tibRQpS/S7f1Q9ZzYx1ZUcN4=");
 _c = Home;
 var _c;
 __turbopack_context__.k.register(_c, "Home");

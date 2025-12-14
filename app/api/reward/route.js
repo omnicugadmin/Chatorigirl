@@ -10,7 +10,7 @@ const supabase = createClient(
 export async function POST(req) {
   try {
     const body = await req.json();   // ✅ Fix
-    const { action, plate_no } = body;
+    const { action, plate_no , payment_mode} = body;
 
     console.log("👉 Received body:", body);
 
@@ -70,6 +70,7 @@ export async function POST(req) {
         plate_no: plate_no,
         used: true,
         used_at: now,
+        payment_mode: payment_mode,
       },
     ]);
 
