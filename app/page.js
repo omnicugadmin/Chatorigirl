@@ -9,6 +9,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [rewardClaimed, setRewardClaimed] = useState(false);
   const [paymentOption, setPaymentOption] = useState("Cash");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
 
   const handleRewardClick = () => {
@@ -54,6 +55,8 @@ export default function Home() {
     setLoading(false);
   };
 
+  
+
   return (
     <div
       style={{
@@ -62,6 +65,7 @@ export default function Home() {
         color: "#333",
         textAlign: "center",
       }}
+
     >
 
       {/* HERO BANNER */}
@@ -74,7 +78,7 @@ export default function Home() {
           padding: "30px 10px",
         }}
       >
-       
+      
       </header>
 
       {/* WELCOME */}
@@ -197,13 +201,38 @@ export default function Home() {
  
       <label className="modal-label">Select Payment Option</label>
 
-      <select 
-         id="payment-option"
-         value={paymentOption}
-         onChange={(e) => setPaymentOption(e.target.value)}>
-        <option value="Cash">Cash</option>
-        <option value="Online">Online</option>
-      </select>
+<div className="custom-select">
+
+  <div
+    className={`selected ${dropdownOpen ? "active" : ""}`}
+    onClick={() => setDropdownOpen(!dropdownOpen)}
+  >
+    {paymentOption}
+  </div>
+
+  {dropdownOpen && (
+    <div className="options">
+      {["Cash", "Online"]
+      .filter(opt => opt !== paymentOption)
+      .map(opt => (
+          <div
+            key={opt}
+            onClick={() => {
+              setPaymentOption(opt);
+              setDropdownOpen(false);
+            }}
+          >
+            {opt}
+          </div>
+        ) 
+      )}
+    </div>
+  )}
+
+</div>
+
+
+<input type="hidden" id="payment-option" value="Online"/>
 
       <button id="submit-plate" 
        onClick={handleSubmit}
@@ -212,8 +241,7 @@ export default function Home() {
     </div>
 </div>
 )}
+</div>)}
 
-</div>
-);
-}
+
 

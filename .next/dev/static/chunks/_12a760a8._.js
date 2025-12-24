@@ -20,6 +20,7 @@ function Home() {
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [rewardClaimed, setRewardClaimed] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [paymentOption, setPaymentOption] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("Cash");
+    const [dropdownOpen, setDropdownOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const handleRewardClick = ()=>{
         setPlateNo("");
         setPaymentOption("Cash");
@@ -69,7 +70,7 @@ function Home() {
                 className: "hero-banner"
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 68,
+                lineNumber: 72,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
@@ -79,7 +80,7 @@ function Home() {
                 }
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 71,
+                lineNumber: 75,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -91,7 +92,7 @@ function Home() {
                 children: "🥳 Craving something tangy? You’re in the right place! Let’s Chalo... pani puri kahte hai!"
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 81,
+                lineNumber: 85,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -109,7 +110,7 @@ function Home() {
                 children: "QR SCANNED SUCCESSFULLY!"
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 85,
+                lineNumber: 89,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -122,7 +123,7 @@ function Home() {
                 children: '👉 Click on "Reward" to get free pani puri!'
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 102,
+                lineNumber: 106,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -142,7 +143,7 @@ function Home() {
                 children: loading ? "⏳ Checking..." : rewardClaimed ? "🎉 Reward Claimed" : "🎉 Reward"
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 114,
+                lineNumber: 118,
                 columnNumber: 7
             }, this),
             rewardMsg && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -160,7 +161,7 @@ function Home() {
                 children: rewardMsg
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 138,
+                lineNumber: 142,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -176,14 +177,14 @@ function Home() {
                     "🙏 Thank you for visiting our page and scanning the QR! ",
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                         fileName: "[project]/app/page.js",
-                        lineNumber: 166,
+                        lineNumber: 170,
                         columnNumber: 65
                     }, this),
                     "Enjoy your pani puri and keep coming back for more!"
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 156,
+                lineNumber: 160,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
@@ -196,7 +197,7 @@ function Home() {
                 children: "© 2025 TheAlwaysHungry. All rights reserved."
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 171,
+                lineNumber: 175,
                 columnNumber: 7
             }, this),
             modalOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -208,7 +209,7 @@ function Home() {
                             children: "Enter Your Details"
                         }, void 0, false, {
                             fileName: "[project]/app/page.js",
-                            lineNumber: 186,
+                            lineNumber: 190,
                             columnNumber: 8
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -216,7 +217,7 @@ function Home() {
                             children: "Plate Number"
                         }, void 0, false, {
                             fileName: "[project]/app/page.js",
-                            lineNumber: 188,
+                            lineNumber: 192,
                             columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -227,7 +228,7 @@ function Home() {
                             placeholder: "e.g. DL8CAF1234"
                         }, void 0, false, {
                             fileName: "[project]/app/page.js",
-                            lineNumber: 190,
+                            lineNumber: 194,
                             columnNumber: 7
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -235,35 +236,56 @@ function Home() {
                             children: "Select Payment Option"
                         }, void 0, false, {
                             fileName: "[project]/app/page.js",
-                            lineNumber: 198,
+                            lineNumber: 202,
                             columnNumber: 7
                         }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
-                            id: "payment-option",
-                            value: paymentOption,
-                            onChange: (e)=>setPaymentOption(e.target.value),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "custom-select",
                             children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                    value: "Cash",
-                                    children: "Cash"
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: `selected ${dropdownOpen ? "active" : ""}`,
+                                    onClick: ()=>setDropdownOpen(!dropdownOpen),
+                                    children: paymentOption
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.js",
-                                    lineNumber: 204,
-                                    columnNumber: 9
+                                    lineNumber: 206,
+                                    columnNumber: 3
                                 }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                    value: "Online",
-                                    children: "Online"
+                                dropdownOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "options",
+                                    children: [
+                                        "Cash",
+                                        "Online"
+                                    ].filter((opt)=>opt !== paymentOption).map((opt)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            onClick: ()=>{
+                                                setPaymentOption(opt);
+                                                setDropdownOpen(false);
+                                            },
+                                            children: opt
+                                        }, opt, false, {
+                                            fileName: "[project]/app/page.js",
+                                            lineNumber: 218,
+                                            columnNumber: 11
+                                        }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.js",
-                                    lineNumber: 205,
-                                    columnNumber: 9
+                                    lineNumber: 214,
+                                    columnNumber: 5
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/page.js",
-                            lineNumber: 200,
-                            columnNumber: 7
+                            lineNumber: 204,
+                            columnNumber: 1
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                            type: "hidden",
+                            id: "payment-option",
+                            value: "Online"
+                        }, void 0, false, {
+                            fileName: "[project]/app/page.js",
+                            lineNumber: 235,
+                            columnNumber: 1
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             id: "submit-plate",
@@ -271,28 +293,28 @@ function Home() {
                             children: "Submit"
                         }, void 0, false, {
                             fileName: "[project]/app/page.js",
-                            lineNumber: 208,
+                            lineNumber: 237,
                             columnNumber: 7
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/page.js",
-                    lineNumber: 184,
+                    lineNumber: 188,
                     columnNumber: 5
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/page.js",
-                lineNumber: 183,
+                lineNumber: 187,
                 columnNumber: 5
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/page.js",
-        lineNumber: 58,
+        lineNumber: 61,
         columnNumber: 5
     }, this);
 }
-_s(Home, "br9tibRQpS/S7f1Q9ZzYx1ZUcN4=");
+_s(Home, "cMaSXA5S+djYSde4pAeDOdephbI=");
 _c = Home;
 var _c;
 __turbopack_context__.k.register(_c, "Home");

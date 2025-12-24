@@ -1,4 +1,3 @@
 {
-  "/api/reward/route": "app/api/reward/route.js",
   "/page": "app/page.js"
 }
